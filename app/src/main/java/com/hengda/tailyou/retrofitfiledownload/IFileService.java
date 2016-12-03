@@ -1,9 +1,10 @@
-package com.hengda.tailyou.retrofitfiledownload.fileload;
+package com.hengda.tailyou.retrofitfiledownload;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Streaming;
 
 /**
  * 作者：Tailyou （祝文飞）
@@ -11,7 +12,7 @@ import retrofit2.http.Path;
  * 邮箱：tailyou@163.com
  * 描述：Retrofit文件下载接口
  */
-public interface FileService {
+public interface IFileService {
 
     /**
      * 下载数据库、资源
@@ -19,6 +20,7 @@ public interface FileService {
      * @param fileName
      * @return
      */
+    @Streaming
     @GET("{fileName}")
     Call<ResponseBody> loadFile(@Path("fileName") String fileName);
 

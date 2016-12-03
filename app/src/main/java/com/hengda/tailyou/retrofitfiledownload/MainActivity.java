@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
-import com.hengda.tailyou.retrofitfiledownload.fileload.FileApi;
-import com.hengda.tailyou.retrofitfiledownload.fileload.FileCallback;
+import com.hengda.zwf.httputil.FileApi;
+import com.hengda.zwf.httputil.FileCallback;
 
 import java.io.File;
 
@@ -26,15 +26,14 @@ public class MainActivity extends AppCompatActivity {
 
         String baseUrl = "http://hengdawb-app.oss-cn-hangzhou.aliyuncs.com/";
         String fileName = "app-debug.apk";
-        String fileStoreDir = Environment.getExternalStorageDirectory().getAbsolutePath() + File
-                .separator + "M_DEFAULT_DIR";
-        String fileStoreName = fileName;
+        String fileStoreDir = Environment.getExternalStorageDirectory().getAbsolutePath()
+                + File.separator + "M_DEFAULT_DIR";
+
         showLoadingDialog();
-        FileApi.getInstance(baseUrl)
-                .loadFileByName(fileName, new FileCallback(fileStoreDir, fileStoreName) {
+        FileRequester.getInstance(baseUrl)
+                .loadFileByName(fileName, new FileCallback(fileStoreDir, fileName) {
                     @Override
                     public void onSuccess(File file) {
-                        super.onSuccess(file);
                         hDialogBuilder.dismiss();
                     }
 
@@ -67,8 +66,8 @@ public class MainActivity extends AppCompatActivity {
      * 显示下载对话框
      */
     private void showLoadingDialog() {
-        txtProgress = (TextView) View.inflate(MainActivity.this, R.layout
-                .layout_hd_dialog_custom_tv, null);
+        txtProgress = (TextView) View.inflate(MainActivity.this,
+                R.layout.layout_hd_dialog_custom_tv, null);
         hDialogBuilder = new HDialogBuilder(MainActivity.this);
         hDialogBuilder.setCustomView(txtProgress)
                 .title("下载")
@@ -77,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         hDialogBuilder.dismiss();
-                        FileApi.cancelLoading();
+                        FileRequester.cancelLoading();
                     }
                 })
                 .show();

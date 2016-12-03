@@ -1,5 +1,4 @@
-package com.hengda.tailyou.retrofitfiledownload.fileload;
-
+package com.hengda.zwf.httputil;
 
 import java.io.IOException;
 
@@ -11,12 +10,6 @@ import okio.BufferedSource;
 import okio.ForwardingSource;
 import okio.Okio;
 
-/**
- * 作者：Tailyou （祝文飞）
- * 时间：2016/5/30 16:19
- * 邮箱：tailyou@163.com
- * 描述：
- */
 public class FileResponseBody extends ResponseBody {
 
     Response originalResponse;
@@ -44,7 +37,7 @@ public class FileResponseBody extends ResponseBody {
             public long read(Buffer sink, long byteCount) throws IOException {
                 long bytesRead = super.read(sink, byteCount);
                 bytesReaded += bytesRead == -1 ? 0 : bytesRead;
-                RxBus.getDefault().post(new FileLoadEvent(contentLength(), bytesReaded));
+                RxBus.getInstance().post(new FileLoadEvent(contentLength(), bytesReaded));
                 return bytesRead;
             }
         });
